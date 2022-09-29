@@ -1,0 +1,38 @@
+    <!-- <div class="center">
+        <h1>Hello Again!</h1>
+        <p>This is served from a file</p>
+    </div> -->
+    <form action=popUp()>
+        <div class="form-group">
+            <label for="configUrl">Your Configured Pop-up URL</label>
+            <input class="form-control" type="text" placeholder="config" readonly>
+        </div>
+        <div class="form-group">
+            <label for="jsonContent">Your JSON content to send into the document</label>
+            <input type="textarea" class="form-control" id="jsonContent" rows="8">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+</body>
+<script>
+    const configUrl = document.getElementById('configUrl');
+    const jsonContent = document.getElementById('jsonContent');
+    const submit = document.getElementById('submit');
+    const form = document.getElementById('form');
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        console.log(configUrl.value);
+        console.log(jsonContent.value);
+    });
+
+    function popUp() {
+        var myWindow = window.open("https://www.w3schools.com");
+    }
+</script>
+
+<div class ="col-md-12">
+    <label for="jsonContent" class="form-label">JSON Content</label>
+    <input type="textarea" class="form-control" id="jsonContent">
+</div>
