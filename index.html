@@ -14,37 +14,59 @@
                 </div> -->
                 <div class="col-md-12">
                     <label for="configUrl" class="form-label">Config URL</label>
-                    <input type="text" class="form-control" id="configUrl">
+                    <input type="text" class="form-control" id="configUrl" value="https://samsandboxaus2.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=https://2ec5-220-233-33-78.au.ngrok.io/&settingId=638000925144325439">
                 </div>
                 <div class ="col-md-12">
                     <label for="jsonContent" class="form-label">JSON Content</label>
                     <textarea class="form-control" id="jsonContent" rows="25" oninput="auto_grow(this)"></textarea>
                 </div>
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Open App Connector</button>
+                    <button type="submit" class="btn btn-primary" onclick="buttonPressed()">Open App Connector</button>
             </form>
     </div>
 </body>
 <script>
-
     let poppedUp = false;
+    let requestConfigUrl = "";
+    let jsonContent = "";
 
-    //pop up window
-    popUpURL.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert(jsonContent.value)
-        console.log(configUrl.value);
-        console.log(jsonContent.value);
-    });
+    function buttonPressed(){
+        poppedUp = true;
+        requestConfigUrl = document.getElementById('configUrl').value;
+        jsonContent = document.getElementById('jsonContent').value;
+        openPopupHandler();
+    }
 
     const openPopupHandler = () => {
-        console.log('opening')
-        poppedUp = true;
         const features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
-        const popup = window.open(configUrl.value, "_blank", features);
-        popup.postMessage(jsonContent.value, configUrl.value);
+        openedPopUp = window.open(requestConfigUrl, "_blank", features);
+        if(openedPopUp) {
+            window.addEventListener("message", messageEventHandler);
+        }
+    };
 
-    }
+    // event listener: https://developer.mozilla.org/en-US/docs/Web/API/Window/message_event
+    const messageEventHandler = (event) => {
+        if(data.type === "ready" || data.type === "document") {
+            // alert('data' + JSON.stringify(data))
+            console.log('event data type: ', event.data.type)
+        }
+        
+        if(event.data.type === "ready") {
+            const url = URL(requestConfigUrl)
+            openedPopUp.postMessage({
+                type: "content",
+                content: jsonContent,
+            }, url.origin);
+        }
+        else if (event.data.type === "document") {
+
+            const newDocumentUrl = event.data.documentUrl;
+            openedPopUp.close();
+            window.removeEventListener("message", messageEventHandler);
+            window.location.href = newDocumentUrl;
+        }
+    };
 
     // ancillary functions
     let obj={"glossary":{"title":"example glossary","GlossDiv":{"title":"S","GlossList":{"GlossEntry":{"ID":"SGML","SortAs":"SGML","GlossTerm":"Standard Generalized Markup Language","Acronym":"SGML","Abbrev":"ISO 8879:1986","GlossDef":{"para":"A meta-markup language, used to create markup languages such as DocBook.","GlossSeeAlso":["GML","XML"]},"GlossSee":"markup"}}}}}
