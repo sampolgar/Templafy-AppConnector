@@ -79,11 +79,8 @@ Templafy won't support non-HTTPS. You can deploy to an HTTPS server or you can u
 
 Start ngrok with the command `ngrok http 4000 --host-header=localhost:4000`.
 
-# 2 options
+# todo
 
-1. popping open the Templafy UI in a browser at the base library level
-2. popping Templafy UI at a selected document
-3. popping Templafy UI at a selected document and pre-populating the document with the data from the page
-
-Adaptive Sections
-https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
+[] explain adaptive sections https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
+[] create simple vs non-simple connectors
+[] test single-page-app
