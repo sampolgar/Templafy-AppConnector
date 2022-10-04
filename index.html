@@ -3,75 +3,59 @@
     integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
 
 <head>
-    <title>My Website</title>
+    <title>Templafy App Connector</title>
 </head>
 
 <body>
-    <script>
-        ShowModelPopUp()
-        function ShowModelPopUp() {
-
-            const features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
-
-            var path = `https://samsandboxaus2.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}&settingId=638000925144325439`;
-
-            window.onmessage = (event) => {
-
-                if (event.data.type == "ready") {
-
-                    openedPopup.postMessage({ type: "content", content: { title: "Document Library", url: path } }, "https://samsandboxaus2.hive.templafy.com");
-
-                }
-
-                if (event.data.type == "document") {
-
-                    var documentURL = event.data.documentUrl;
-
-                    openedPopup.close();
-
-                    window.location.href = documentURL;
-
-                }
-
-            };
-
-            var openedPopup = window.open(path, "_blank", features);
-
-        }
-
-    </script>
     <div class="container mt-5">
         <h1>Templafy App Connector</h1>
         <form class="row g-3" id="popUpURL">
-            <!-- <div class="col-md-6">
-                    <label for="tenantName" class="form-label">Tenant name</label>
-                    <input type="text" class="form-control" id="tenantName">
-                    <small id="tenantNameHelp" class="form-text text-muted">Just the tenantname e.g. https://<mark>tenantname</mark>.templafy.com</small>
-                </div> -->
-            <div class="col-md-12">
-                <label for="configUrl" class="form-label">Config URL</label>
-                <input type="text" class="form-control" id="configUrl">
+            <div class="col-md-6">
+                <label for="tenantName" class="form-label">Tenant name</label>
+                <input type="text" class="form-control" id="tenantName" oninput="updateTenantName()">
+                <small id="tenantNameHelp" class="form-text text-muted">Just the tenantname e.g.
+                    https://<mark>tenantname</mark>.templafy.com</small>
             </div>
             <div class="col-md-12">
-                <label for="jsonContent" class="form-label">JSON Content</label>
+                <label for="features" class="form-label">Features and settings of the pop-up window</label>
+                <input type="text" class="form-control" id="features" oninput="updateFeatures()">
+            </div>
+            <div class="col-md-12">
+                <label for="configUrl" class="form-label">Config URL</label>
+                <input type="text" class="form-control" id="configUrl" readonly>
+                <small id="configUrlHelp" class="form-text text-muted">this URL is read only, generated from the Tenant
+                    name and current site</small>
+            </div>
+            <div class="col-md-12">
+                <label for="libraryNavLabel" class="form-label">Library navigation path</label>
+                <input type="text" class="form-control" id="libraryNav" onclick="updateLibraryNav()">
+            </div>
+            <div class="col-md-12">
+                <p>
+                    hello world
+                </p>
+            </div>
+            <div class="col-md-12">
+                <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document, must be
+                    valid JSON</label>
                 <textarea class="form-control" id="jsonContent" rows="25" oninput="auto_grow(this)"></textarea>
             </div>
             <div class="col-12">
-                <button type="submit" class="btn btn-primary" onclick="buttonPressed()">Open App Connector</button>
+                <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App Connector</button>
         </form>
     </div>
 </body>
 
-
 <script>
-    function buttonPressed() {
-        const features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
+    function openTemplafy() {
+        let tenantOrigin = new URL(path).origin;
 
-        var path = `https://samsandboxaus2.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}&settingId=638000925144325439`;
         window.onmessage = (event) => {
 
             if (event.data.type == "ready") {
-                openedPopup.postMessage({ type: "content", content: { "test": "test" } }, "https://samsandboxaus2.templafy.com");
+
+                openedPopup.postMessage({ type: "content", content: { title: "Document Library", url: path } }, tenantOrigin);
+
             }
 
             if (event.data.type == "document") {
@@ -85,63 +69,37 @@
             }
 
         };
-        console.log('path: ' + path)
-        const newUrl = new URL(path);
-        console.log('url path: ' + newUrl)
+
         var openedPopup = window.open(path, "_blank", features);
+
     }
-    // // const configUrl = document.getElementById("configUrl").value;
-    // const jsonContent = document.getElementById("jsonContent").value;
 
-    // let poppedUp = false;
-    // let requestConfigUrl = "";
-    // let jsonContent = {};
+    //
+    let tenantName = "samsandboxaus2";
+    document.getElementById("tenantName").value = tenantName;
 
+    let path = `https://${tenantName}.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+    document.getElementById("configUrl").value = path;
 
-    // const buttonPressed = () => {
-    //     poppedUp = true;
-    //     requestConfigUrl = document.getElementById('configUrl').value;
-    //     jsonContent = document.getElementById('jsonContent').value;
-    //     openPopupHandler();
-    // }
+    function updateTenantName() {
+        tenantName = document.getElementById("tenantName").value;
+        path = `https://${tenantName}.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+        document.getElementById("configUrl").value = path;
+    }
 
-    // const openPopupHandler = () => {
-    //     const features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
+    let features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
+    document.getElementById("features").value = features;
 
-    //     openedPopUp = window.open(requestConfigUrl, "_blank", features);
+    function updateFeatures() {
+        features = document.getElementById("features").value;
+    }
 
-    //     if(openedPopUp) {
-    //         window.addEventListener("message", messageEventHandler(e));
-    //     }
-    // };
+    let libraryNav = "";
+    function updateLibraryNav() {
+        libraryNav = document.getElementById("libraryNav").value;
+    }
 
-    // event listener: https://developer.mozilla.org/en-US/docs/Web/API/Window/message_event
-    // const messageEventHandler = (event) => {
-    //     console.log('message event handler')
-    //     if(event.data.type === "ready" || event.data.type === "document") {
-    //         // alert('data' + JSON.stringify(data))
-    //         console.log('event data type: ', event.data.type)
-    //     }
-
-    //     if(event.data.type === "ready") {
-    //         const url = URL(requestConfigUrl)
-    //         openedPopUp.postMessage({
-    //             type: "content",
-    //             content: jsonContent,
-    //         }, url.origin);
-    //     }
-    //     else if (event.data.type === "document") {
-
-    //         const newDocumentUrl = event.data.documentUrl;
-    //         openedPopUp.close();
-    //         window.removeEventListener("message", messageEventHandler);
-    //         window.location.href = newDocumentUrl;
-    //     }
-    // };
-
-    // ancillary functions
     let obj = { "glossary": { "title": "example glossary", "GlossDiv": { "title": "S", "GlossList": { "GlossEntry": { "ID": "SGML", "SortAs": "SGML", "GlossTerm": "Standard Generalized Markup Language", "Acronym": "SGML", "Abbrev": "ISO 8879:1986", "GlossDef": { "para": "A meta-markup language, used to create markup languages such as DocBook.", "GlossSeeAlso": ["GML", "XML"] }, "GlossSee": "markup" } } } } }
-
     document.getElementById('jsonContent').value = prettyMyJson(obj);
 
     function prettyMyJson(uglyJson) {
