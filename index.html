@@ -14,7 +14,7 @@
                 <label for="tenantName" class="form-label">Tenant name</label>
                 <input type="text" class="form-control" id="tenantName" oninput="updateTenantName()">
                 <small id="tenantNameHelp" class="form-text text-muted">Just the tenantname e.g.
-                    https://<mark>tenantname</mark>.templafy.com</small>
+                    https://tenantname.templafy.com</small>
             </div>
             <div class="col-md-12">
                 <label for="features" class="form-label">Features and settings of the pop-up window</label>
@@ -29,16 +29,48 @@
             <div class="col-md-12">
                 <label for="libraryNavLabel" class="form-label">Library navigation path</label>
                 <input type="text" class="form-control" id="libraryNav" onclick="updateLibraryNav()">
+                <small id="libraryNavHelp" class="form-text text-muted">Must start and end with /</small>
             </div>
             <div class="col-md-12">
-                <p>
-                    hello world
-                </p>
+                <ul class="list-unstyled">
+                    <li>By default, Templafy opens the root of the library pane e.g. when you navigate to
+                        https://tenantname.templafy.com</li>
+                    <li>For scenarios where you want to open the library pane at a specific folder or document, you can
+                        specify the path to the folder in the library pane.</li>
+                    <li></li>
+                    <li><strong>Folder example:</strong></li>
+                    <li>If you setup the app connector on a CRM that only makes templates from the CRM folder in the
+                        library, you can specify Templafy to open on the CRM folder.</li>
+                    <li>
+                        <ul>
+                            <li>navigate to the path in the library pane</li>
+                            <li>copy the URL from the browser e.g.
+                                https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm</li>
+                            <li>remove the https://tenantname.templafy.com</li>
+                            <li>add navigation path: /library/documents/Global/sales/crm</li>
+                        </ul>
+                    </li>
+                    <li></li>
+                    <li><strong>Specific document example:</strong></li>
+                    <li>If you want to open a specific document form, perhaps one you're sending JSON data into, you can
+                        specify the path to the document.</li>
+                    <li>
+                        <ul>
+                            <li>navigate to the path in the library pane</li>
+                            <li>copy the URL from the browser e.g.
+                                https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm/_service-contract
+                            </li>
+                            <li>remove the https://tenantname.templafy.com</li>
+                            <li>add navigation path: /library/documents/Global/sales/crm/_service-contract</li>
+                        </ul>
+                    </li>
+
+                </ul>
             </div>
             <div class="col-md-12">
                 <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document, must be
                     valid JSON</label>
-                <textarea class="form-control" id="jsonContent" rows="25" oninput="auto_grow(this)"></textarea>
+                <textarea class="form-control" id="jsonContent" rows="21" oninput="auto_grow(this)"></textarea>
             </div>
             <div class="col-12">
                 <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App Connector</button>
@@ -46,60 +78,84 @@
     </div>
 </body>
 
+// Javascript function to open the Templafy pop-up
 <script>
     function openTemplafy() {
         let tenantOrigin = new URL(path).origin;
-
         window.onmessage = (event) => {
-
             if (event.data.type == "ready") {
-
-                openedPopup.postMessage({ type: "content", content: { title: "Document Library", url: path } }, tenantOrigin);
-
+                openedPopup.postMessage({
+                    type: "content",
+                    content: document.getElementById("jsonContent").value,
+                    url: path
+                    // content: {
+                    //     title: "Document Library",
+                    //     url: path
+                    // }
+                },
+                    tenantOrigin);
             }
-
             if (event.data.type == "document") {
-
                 var documentURL = event.data.documentUrl;
-
                 openedPopup.close();
-
                 window.location.href = documentURL;
-
             }
-
         };
-
         var openedPopup = window.open(path, "_blank", features);
-
     }
 
-    //
+
+    //set defaults
     let tenantName = "samsandboxaus2";
     document.getElementById("tenantName").value = tenantName;
 
-    let path = `https://${tenantName}.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+    let libraryNav = "/library/";
+    document.getElementById("libraryNav").value = libraryNav;
+
+    let features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
+    document.getElementById("features").value = features;
+
+    let path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
     document.getElementById("configUrl").value = path;
 
     function updateTenantName() {
         tenantName = document.getElementById("tenantName").value;
-        path = `https://${tenantName}.hive.templafy.com/library/documents?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
         document.getElementById("configUrl").value = path;
     }
-
-    let features = "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
-    document.getElementById("features").value = features;
 
     function updateFeatures() {
         features = document.getElementById("features").value;
     }
 
-    let libraryNav = "";
     function updateLibraryNav() {
         libraryNav = document.getElementById("libraryNav").value;
+        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+        document.getElementById("configUrl").value = path;
     }
 
-    let obj = { "glossary": { "title": "example glossary", "GlossDiv": { "title": "S", "GlossList": { "GlossEntry": { "ID": "SGML", "SortAs": "SGML", "GlossTerm": "Standard Generalized Markup Language", "Acronym": "SGML", "Abbrev": "ISO 8879:1986", "GlossDef": { "para": "A meta-markup language, used to create markup languages such as DocBook.", "GlossSeeAlso": ["GML", "XML"] }, "GlossSee": "markup" } } } } }
+    let obj = {
+        accountName: "Franks Fine Dining Restaurant",
+        orderTotal: "$16.50",
+        purchases: [
+            {
+                name: "Banana",
+                price: "$1.50",
+                image: "https://github.com/sampolgar/Templafy-AppConnector/blob/assets/banana.jpg"
+            },
+            {
+                name: "Mango",
+                price: "$2.00",
+                image: "https://github.com/sampolgar/Templafy-AppConnector/blob/assets/mango.jpg"
+            },
+            {
+                name: "Papaya",
+                price: "$3.00",
+                image: "https://github.com/sampolgar/Templafy-AppConnector/blob/assets/papaya.jpg"
+            }
+        ]
+    }
+
     document.getElementById('jsonContent').value = prettyMyJson(obj);
 
     function prettyMyJson(uglyJson) {
@@ -110,7 +166,6 @@
         element.style.height = "5px";
         element.style.height = (element.scrollHeight) + "px";
     }
-
 </script>
 
 </html>
