@@ -30,52 +30,15 @@
                 <label for="libraryNavLabel" class="form-label">Library navigation path</label>
                 <input type="text" class="form-control" id="libraryNav" onclick="updateLibraryNav()">
                 <small id="libraryNavHelp" class="form-text text-muted">Must start and end with /</small>
-<<<<<<< HEAD
-=======
-            </div>
-            <div class="col-md-12">
-                <ul class="list-unstyled">
-                    <li>By default, Templafy opens the root of the library pane e.g. when you navigate to
-                        https://tenantname.templafy.com</li>
-                    <li>For scenarios where you want to open the library pane at a specific folder or document, you can
-                        specify the path to the folder in the library pane.</li>
-                    <li></li>
-                    <li><strong>Folder example:</strong></li>
-                    <li>If you setup the app connector on a CRM that only makes templates from the CRM folder in the
-                        library, you can specify Templafy to open on the CRM folder.</li>
-                    <li>
-                        <ul>
-                            <li>navigate to the path in the library pane</li>
-                            <li>copy the URL from the browser e.g.
-                                https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm</li>
-                            <li>remove the https://tenantname.templafy.com</li>
-                            <li>add navigation path: /library/documents/Global/sales/crm</li>
-                        </ul>
-                    </li>
-                    <li></li>
-                    <li><strong>Specific document example:</strong></li>
-                    <li>If you want to open a specific document form, perhaps one you're sending JSON data into, you can
-                        specify the path to the document.</li>
-                    <li>
-                        <ul>
-                            <li>navigate to the path in the library pane</li>
-                            <li>copy the URL from the browser e.g.
-                                https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm/_service-contract
-                            </li>
-                            <li>remove the https://tenantname.templafy.com</li>
-                            <li>add navigation path: /library/documents/Global/sales/crm/_service-contract</li>
-                        </ul>
-                    </li>
-
-                </ul>
-            </div>
-            <div class="col-md-12">
-                <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document, must be
-                    valid JSON</label>
-                <textarea class="form-control" id="jsonContent" rows="21" oninput="auto_grow(this)"></textarea>
-            </div>
-            <div class="col-12">
-                <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App Connector</button>
+                <div class="col-md-12">
+                    <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document,
+                        must be
+                        valid JSON</label>
+                    <textarea class="form-control" id="jsonContent" rows="21" oninput="auto_grow(this)"></textarea>
+                </div>
+                <div class="col-12">
+                    <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App
+                        Connector</button>
         </form>
     </div>
 </body>
