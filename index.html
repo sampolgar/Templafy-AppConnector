@@ -68,7 +68,6 @@
                     </li>
 
                 </ul>
->>>>>>> 4209e07a1864cc1f6f16f97bd95996d075261634
             </div>
             <div class="col-md-12">
                 <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document, must be
@@ -86,7 +85,6 @@
     function openTemplafy() {
         let tenantOrigin = new URL(path).origin;
         window.onmessage = (event) => {
-<<<<<<< HEAD
             console.log("event" + JSON.stringify(event.data))
             //
             if (event.data.type == "ready") {
@@ -102,31 +100,12 @@
             if (event.data.type == "document") {
                 window.addEventListener('message', console.log)
                 console.log("event document" + JSON.stringify(event.data))
-=======
-            if (event.data.type == "ready") {
-                openedPopup.postMessage({
-                    type: "content",
-                    content: document.getElementById("jsonContent").value,
-                    url: path
-                    // content: {
-                    //     title: "Document Library",
-                    //     url: path
-                    // }
-                },
-                    tenantOrigin);
-            }
-            if (event.data.type == "document") {
->>>>>>> 4209e07a1864cc1f6f16f97bd95996d075261634
                 var documentURL = event.data.documentUrl;
                 openedPopup.close();
                 window.location.href = documentURL;
             }
         };
-<<<<<<< HEAD
         let openedPopup = window.open(path, "_blank", features);
-=======
-        var openedPopup = window.open(path, "_blank", features);
->>>>>>> 4209e07a1864cc1f6f16f97bd95996d075261634
     }
 
 
