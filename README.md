@@ -31,6 +31,7 @@ Features configure the pop-up window, you can change these
 The Library navigation will expedite the document creation process.
 By default, Templafy will pop-up on the base library. Users can select any document/presentation to use, but this isn't the fastest way.
 For example, in this video, you see the user pressing documents and swapping between folders.
+
 https://user-images.githubusercontent.com/39210767/193813506-9a5b048b-c72f-4f28-8630-f7f10e25cab5.mp4
 
 Setting the library navigation path will skip past this.
