@@ -6,6 +6,8 @@
     <title>Templafy App Connector</title>
 </head>
 
+<!-- Form HTML - only for the mockup -->
+
 <body>
     <div class="container mt-5">
         <h1>Templafy App Connector</h1>
@@ -28,46 +30,51 @@
             </div>
             <div class="col-md-12">
                 <label for="libraryNavLabel" class="form-label">Library navigation path</label>
-                <input type="text" class="form-control" id="libraryNav" onclick="updateLibraryNav()">
+                <input type="text" class="form-control" id="libraryNav" oninput="updateLibraryNav()">
                 <small id="libraryNavHelp" class="form-text text-muted">Must start and end with /</small>
-                <div class="col-md-12">
-                    <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document,
-                        must be
-                        valid JSON</label>
-                    <textarea class="form-control" id="jsonContent" rows="21" oninput="auto_grow(this)"></textarea>
-                </div>
-                <div class="col-12">
-                    <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App
-                        Connector</button>
+            </div>
+            <div class="col-md-12">
+                <label for="jsonContent" class="form-label">JSON Content - this will be sent to the document,
+                    must be
+                    valid JSON</label>
+                <textarea class="form-control" id="jsonContent" rows="21" oninput="twoFunctions(this)"></textarea>
+            </div>
+            <div class="col-12">
+                <button type="button" class="btn btn-primary" onclick="openTemplafy()">Open App
+                    Connector</button>
         </form>
     </div>
+    <div class="mt-5"></div>
 </body>
 
-// Javascript function to open the Templafy pop-up
+<!-- // Javascript function to open the Templafy pop-up -->
 <script>
     function openTemplafy() {
         let tenantOrigin = new URL(path).origin;
+
+        //monitor for events
         window.onmessage = (event) => {
             console.log("event" + JSON.stringify(event.data))
-            //
+
+            // Templafy will send a message back to the window when its ready to receive the JSON content. Don't send before otherwise the content will be lost.
             if (event.data.type == "ready") {
-                console.log("event ready" + JSON.stringify(event.data))
+                console.log(jsonContent)
                 openedPopup.postMessage({
                     type: "content",
-                    content: obj,
+                    content: jsonContent,
                 },
                     tenantOrigin);
             }
-
-            //
+            //Templafy can send the document back to the window - you can then save it to your system, or download it
             if (event.data.type == "document") {
                 window.addEventListener('message', console.log)
-                console.log("event document" + JSON.stringify(event.data))
                 var documentURL = event.data.documentUrl;
                 openedPopup.close();
+                //file is downloaded
                 window.location.href = documentURL;
             }
         };
+        //pop open Templafy with the config URL and features
         let openedPopup = window.open(path, "_blank", features);
     }
 
@@ -85,23 +92,7 @@
     let path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
     document.getElementById("configUrl").value = path;
 
-    function updateTenantName() {
-        tenantName = document.getElementById("tenantName").value;
-        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
-        document.getElementById("configUrl").value = path;
-    }
-
-    function updateFeatures() {
-        features = document.getElementById("features").value;
-    }
-
-    function updateLibraryNav() {
-        libraryNav = document.getElementById("libraryNav").value;
-        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
-        document.getElementById("configUrl").value = path;
-    }
-
-    let obj = {
+    let jsonContent = {
         accountName: "Franks Fine Dining Restaurant",
         orderTotal: "$16.50",
         purchases: [
@@ -122,13 +113,39 @@
             }
         ]
     }
+    document.getElementById("jsonContent").value = JSON.stringify(jsonContent, null, 2);
 
-    document.getElementById('jsonContent').value = prettyMyJson(obj);
-
-    function prettyMyJson(uglyJson) {
-        return JSON.stringify(uglyJson, undefined, 4);
+    //let user update tenant name
+    function updateTenantName() {
+        tenantName = document.getElementById("tenantName").value;
+        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+        document.getElementById("configUrl").value = path;
     }
 
+    //let user update features
+    function updateFeatures() {
+        features = document.getElementById("features").value;
+    }
+
+    //let user update library nav
+    function updateLibraryNav() {
+        libraryNav = document.getElementById("libraryNav").value;
+        path = `https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}`;
+        document.getElementById("configUrl").value = path;
+    }
+
+    //let user update JSON content, make it pretty and send it back to the window
+    function updateJsonContent() {
+        jsonContent = document.getElementById("jsonContent").value;
+        // document.getElementById("jsonContent").value = JSON.stringify(jsonContent, null, 2);
+    }
+
+    function twoFunctions(html) {
+        updateJsonContent();
+        auto_grow(html);
+    }
+
+    //grow the json content box if needed
     function auto_grow(element) {
         element.style.height = "5px";
         element.style.height = (element.scrollHeight) + "px";
