@@ -15,13 +15,13 @@ https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-
 
 ### Templafy configuration
 
-1. Configure an app connector with the domain that will contact Templafy. This needs to be the exact domain, as Templafy will only accept the domain
+1. Configure an app connector with the domain that will contact Templafy. This needs to be the exact domain, as Templafy will only accept the domain. Instructions available here: https://support.templafy.com/hc/en-us/articles/360018358678-How-to-enable-a-Custom-App-Connector-
 2. Contact support if you can't access this page
    ![image](https://user-images.githubusercontent.com/39210767/193812874-51ccdee3-caf7-4ed9-9156-c17d35482bc5.png)
 
 ### Tenant name
 
-1. Your tenant name is available here - you'll need this
+1. Your tenant name is available in your URL - you'll need this
    ![image](https://user-images.githubusercontent.com/39210767/193813042-2b67abb3-af2b-42b0-b1c4-df120221d573.png)
 
 ### Features
@@ -34,21 +34,25 @@ Features configure the pop-up window, you can change these
 
 ### Library navigation
 
-The Library navigation will expedite the document creation process.
-By default, Templafy will pop-up on the base library. Users can select any document/presentation to use, but this isn't the fastest way.
-For example, in this video, you see the user pressing documents and swapping between folders.
+Configuring library navigation will expedite the document creation process.
+With the default library navigation - `/library/` - your document creation process looks like this
 
-https://user-images.githubusercontent.com/39210767/193813506-9a5b048b-c72f-4f28-8630-f7f10e25cab5.mp4
+https://user-images.githubusercontent.com/39210767/194207571-b902ca5b-bd4e-470c-b380-77e3683b6139.mp4
 
-Setting the library navigation path will skip past this.
+Notice the number of clicks you need to get to the end-document.
 
-#### How to set the Library navigation
+You can skip this by accessing Templafy as an end-user, then navigating to the end folder, document or presentation you need to pop-open, copy the URL path to use as the library navigation path.
 
-1. Open Templafy as an end-user and navigate to the folder or document you'd like to open
-2. e.g. if you're a sales person working on the CRM, you may want all CRM folder docs => https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm
-3. use the library navigation path /library/documents/Global/sales/crm
-4. if you're creating 1 type of contract and want to open straight on the page, similar to the example at the top of the page, navigate there as a user and copy the URL e.g. https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm/_service-contract
-5. use the navigation path /library/documents/Global/sales/crm/_service-contract
+https://user-images.githubusercontent.com/39210767/194209819-f9ac379d-d67c-496a-ad34-179d972c04cd.mp4
+
+Then use the navigation path `/library/documents/Global/sales/crm/_appconnector-prefilledform-with-image`
+
+The library path uses the Template name. If the template name changes, the library path will be invalid. A solution is to use the documentId in the library path.
+To find the ID, as an admin, navigate to the document library, click on the settings and copy the assetid.
+
+https://user-images.githubusercontent.com/39210767/194210627-d43dbde5-b0ce-4cbb-a576-f8059c6ad5bb.mp4
+
+Then use the navigation path `/library/id/{{documentId}}`
 
 ### URL
 
@@ -68,28 +72,52 @@ e.g.
 
 https://user-images.githubusercontent.com/39210767/193814749-ad935984-a558-4fb6-9c72-80d4fda1acf1.mp4
 
+If this happens, 
+1. check your browser logs for any issues 
+2. check your current browser location is included in the settings in the Templafy admin portal
+3. ensure you open Templafy from HTTPS
+4. ensure your user is authenticated to Templafy
+5. double check the above - there's probably something wrong
+
 ## How to use this template?
 
-Templafy won't support non-HTTPS. You can deploy to an HTTPS server or you can use ngrok
+Templafy won't support non-HTTPS. You can deploy to an HTTPS server, or you can use ngrok for testing locally, or host the static HTML file in the cloud e.g. Azure blob.
 
-### setup ngrok
+### Local testing
+
+- ensure you have nodejs
+- cd to the folder you want to clone the project into
+- run git clone https://github.com/sampolgar/Templafy-AppConnector.git
+- run `node index.js`
+- open http://localhost:4000/
+
+`You won't be able to open Templafy - see ngrok details below for to open your local machine to HTTPS`
+
+### Setup ngrok
 
 1. install [ngrok](https://ngrok.com/)
 2. run setup instructions from [ngrok](https://ngrok.com/)
 3. run `ngrok http 4000 --host-header=localhost:4000`
 4. ngrok will provide an HTTPS URL e.g. https://50bf-2001-8003-3096-3101-6c05-f840-8e0e-8a29.au.ngrok.io => you'll need to add this to your App Connector configuration in Templafy
 
-### Locally - can't call Templafy
+# Configuring Templates to receive data from the App Connector
+1. Data sent to Templafy must be in JSON format
+2. Bind data in the document with HostSystem bindings https://support.templafy.com/hc/en-us/articles/360018415558-HostSystem-binding-
 
-- ensure you have nodejs
-- cd to the folder you want to clone the project into
-- run git clone https://github.com/sampolgar/Templafy-AppConnector.git
-- run `node appconnector.js`
-- open http://localhost:4000/
+## pre-filling Template form with JSON data
 
-###
+https://user-images.githubusercontent.com/39210767/194212231-97ecd614-20b2-48cd-8eb7-60076780a7b7.mp4
 
+## using JSON data in the document
 
-# todo
+### simple text binding
 
-[] explain adaptive sections https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
+![image](https://user-images.githubusercontent.com/39210767/194212570-aef6b0e5-d25c-4939-8bba-ecca5c59ca61.png)
+
+### json array binding with images
+1. Ensure the image is a public image
+2. Use an image binding, details here: https://support.templafy.com/hc/en-us/articles/6066298674205-How-to-insert-custom-image-bindings-to-accommodate-complex-use-cases-
+3. If multiple images, use repeating groups, details here: https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
+
+https://user-images.githubusercontent.com/39210767/194213926-9bd44f00-6268-4667-b865-2d02dcffe227.mp4
+
