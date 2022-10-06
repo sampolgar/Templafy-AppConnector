@@ -13,6 +13,8 @@ https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-
 4. As an admin, create an app connector integration in Templafy. Add the domian i.e. s3.aws.com to the domain settings (don't add a / at the end)
 5. Use the pop-open Templafy button on the app connector and select the template you uploaded in step 2
 
+Demo: https://green-ground-0d5d53c0f.2.azurestaticapps.net/
+
 ## Architecture
 
 - all communication to Templafy must use HTTPS - if you're developing on your computer, please use ngrok
