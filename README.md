@@ -1,8 +1,8 @@
 # Templafy App Connector Template
 
-## What is the app connector?
+## What is the App Connector?
 
-The app connector is a mechanism to create a document/presentation and push data from a webpage e.g. CRM into a template.
+The App Connector is a mechanism to create a document/presentation and push data from a webpage e.g. CRM into a template.
 
 https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-85cf-e34b0c5c0634.mp4
 
@@ -93,7 +93,6 @@ If this happens,
 5. double check the above - there's probably something wrong
 
 # Javascript functions
-Open the popup & send the URL and features there
 
 ## Templafy sends event type = ready
 Templafy will let the Window know when its ready for the JSON content, don't send it beforehand or it will be lost.
