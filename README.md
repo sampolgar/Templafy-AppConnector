@@ -1,5 +1,9 @@
 # Templafy App Connector Template
 
+## Overview
+1. What is the app connector (video demo)
+2. 
+
 ## What is the App Connector?
 
 The App Connector is a mechanism to create a document/presentation and push data from a webpage e.g. CRM into a template.
@@ -20,18 +24,21 @@ Demo: https://green-ground-0d5d53c0f.2.azurestaticapps.net/
 - all communication to Templafy must use HTTPS - if you're developing on your computer, please use ngrok
 - the button or alternate action on the webpage calls Templafy via the pop-up and listens to event response
 
-## Key Instructions
+## Key Configuration
 
-### Templafy configuration
+### Templafy admin portal
 
 1. Configure an app connector with the domain that will contact Templafy. This needs to be the exact domain, as Templafy will only accept the domain. Instructions available here: https://support.templafy.com/hc/en-us/articles/360018358678-How-to-enable-a-Custom-App-Connector-
 2. Contact support if you can't access this page
+
    ![image](https://user-images.githubusercontent.com/39210767/193812874-51ccdee3-caf7-4ed9-9156-c17d35482bc5.png)
+
 
 ### Tenant name
 
 1. Your tenant name is available in your URL - you'll need this
    ![image](https://user-images.githubusercontent.com/39210767/193813042-2b67abb3-af2b-42b0-b1c4-df120221d573.png)
+
 
 ### Features
 
@@ -41,46 +48,50 @@ Features configure the pop-up window, you can change these
 "menubar=no,location=no,resizable=no,scrollbars=no,status=no,titlebar=no,toolbar=no,width=1500,height=1000";
 ```
 
+
 ### Library navigation
 
-#### default navigation path
+
+#### Default navigation path
 
 Configuring library navigation will expedite the document creation process.
-With the default library navigation - `/library/` - your document creation process looks like this
+With the default library navigation - `/library/` - your document creation is process illustrated in the below video. Notice the number of clicks you need to get to the end-document.
 
 https://user-images.githubusercontent.com/39210767/194207571-b902ca5b-bd4e-470c-b380-77e3683b6139.mp4
 
-Notice the number of clicks you need to get to the end-document.
 
-#### navigation path
+#### Plain navigation path
 
 You can skip this by accessing Templafy as an end-user, then navigating to the end folder, document or presentation you need to pop-open, copy the URL path to use as the library navigation path.
 
-https://user-images.githubusercontent.com/39210767/194209819-f9ac379d-d67c-496a-ad34-179d972c04cd.mp4
-
 Then use the navigation path `/library/documents/Global/sales/crm/_appconnector-prefilledform-with-image`
 
-#### navigation path with asset id
+https://user-images.githubusercontent.com/39210767/194209819-f9ac379d-d67c-496a-ad34-179d972c04cd.mp4
+
+
+#### AssetId navigation path
 
 The library path uses the Template name. If the template name changes, the library path will be invalid. A solution is to use the documentId in the library path.
 To find the ID, as an admin, navigate to the document library, click on the settings and copy the assetid.
 
-https://user-images.githubusercontent.com/39210767/194210627-d43dbde5-b0ce-4cbb-a576-f8059c6ad5bb.mp4
-
 Then use the navigation path `/library/id/{{documentId}}`
 
-### URL
+https://user-images.githubusercontent.com/39210767/194210627-d43dbde5-b0ce-4cbb-a576-f8059c6ad5bb.mp4
 
-The URL is important to Templafy
+
+### URL
 
 ```
 https://${tenantName}.hive.templafy.com${libraryNav}?externalSystemType=genericAppConnector&origin=${window.location.origin}
 ```
 
+The URL is important to Templafy because 
+
 1. it contains the tenant URL
 2. the library navigation
 3. the current browser location
-   If these 3 are correct, the browser should pop open and you'll be able to browse through the Templafy library
+
+If these 3 are correct, the browser will pop open and you'll be able to browse through the Templafy library.
 
 If they aren't correct, you may be able to see a folder structure (if you're authenticated to Templafy), but you won't be able to browse through
 e.g.
@@ -94,10 +105,12 @@ If this happens,
 4. ensure your user is authenticated to Templafy
 5. double check the above - there's probably something wrong
 
+
+
 # Javascript functions
 
 ## Templafy sends event type = ready
-Templafy will let the Window know when its ready for the JSON content, don't send it beforehand or it will be lost.
+Templafy will let the Window know when its ready for the JSON content, don't send the JSON content beforehand or it will be lost.
 
 ```
 if (event.data.type == "ready") {
@@ -151,19 +164,25 @@ Templafy won't support non-HTTPS. You can deploy to an HTTPS server, or you can 
 3. run `ngrok http 4000 --host-header=localhost:4000`
 4. ngrok will provide an HTTPS URL e.g. https://50bf-2001-8003-3096-3101-6c05-f840-8e0e-8a29.au.ngrok.io => you'll need to add this to your App Connector configuration in Templafy
 
+
 # Configuring Templates to receive data from the App Connector
+
 1. Data sent to Templafy must be in JSON format
 2. Bind data in the document with HostSystem bindings https://support.templafy.com/hc/en-us/articles/360018415558-HostSystem-binding-
+
 
 ## Pre-filling Template form with JSON data
 
 https://user-images.githubusercontent.com/39210767/194212231-97ecd614-20b2-48cd-8eb7-60076780a7b7.mp4
 
+
 ## Using JSON data in the document
+
 
 ### Simple text binding
 
 ![image](https://user-images.githubusercontent.com/39210767/194214603-3e4db59a-4c9a-4b1b-9483-46bc58372b65.png)
+
 
 ### Json array binding with images
 1. Ensure the image is a public image
