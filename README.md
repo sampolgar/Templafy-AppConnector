@@ -34,6 +34,8 @@ Features configure the pop-up window, you can change these
 
 ### Library navigation
 
+#### default navigation path
+
 Configuring library navigation will expedite the document creation process.
 With the default library navigation - `/library/` - your document creation process looks like this
 
@@ -41,11 +43,15 @@ https://user-images.githubusercontent.com/39210767/194207571-b902ca5b-bd4e-470c-
 
 Notice the number of clicks you need to get to the end-document.
 
+#### navigation path
+
 You can skip this by accessing Templafy as an end-user, then navigating to the end folder, document or presentation you need to pop-open, copy the URL path to use as the library navigation path.
 
 https://user-images.githubusercontent.com/39210767/194209819-f9ac379d-d67c-496a-ad34-179d972c04cd.mp4
 
 Then use the navigation path `/library/documents/Global/sales/crm/_appconnector-prefilledform-with-image`
+
+#### navigation path with asset id
 
 The library path uses the Template name. If the template name changes, the library path will be invalid. A solution is to use the documentId in the library path.
 To find the ID, as an admin, navigate to the document library, click on the settings and copy the assetid.
