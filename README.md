@@ -4,7 +4,7 @@
 
 The app connector is a mechanism to create a document/presentation and push data from a webpage e.g. CRM into a template.
 
-https://user-images.githubusercontent.com/39210767/193811418-c6b4b9a7-0def-4969-8e97-2c449e1c3633.mp4
+https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-85cf-e34b0c5c0634.mp4
 
 ## Architecture
 
@@ -48,7 +48,7 @@ Setting the library navigation path will skip past this.
 2. e.g. if you're a sales person working on the CRM, you may want all CRM folder docs => https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm
 3. use the library navigation path /library/documents/Global/sales/crm
 4. if you're creating 1 type of contract and want to open straight on the page, similar to the example at the top of the page, navigate there as a user and copy the URL e.g. https://samsandboxaus2.templafy.com/library/documents/Global/sales/crm/_service-contract
-5. use the navigation path /library/documents/Global/sales/crm/\_service-contract
+5. use the navigation path /library/documents/Global/sales/crm/_service-contract
 
 ### URL
 
@@ -89,12 +89,7 @@ Templafy won't support non-HTTPS. You can deploy to an HTTPS server or you can u
 
 ###
 
--
-
-Start ngrok with the command `ngrok http 4000 --host-header=localhost:4000`.
 
 # todo
 
 [] explain adaptive sections https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
-[] create simple vs non-simple connectors
-[] test single-page-app
