@@ -6,6 +6,13 @@ The app connector is a mechanism to create a document/presentation and push data
 
 https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-85cf-e34b0c5c0634.mp4
 
+## TL|DR
+1. Host the static HTML file in Azure blog or an S3 bucket, change the tenant URL details inside the HTML file
+2. Upload [this word](https://templafydownload.blob.core.windows.net/delivery/Integrations/AppConnector-HTML/index.html) document to your Templafy
+3. Open the HTML file on Azure blob or S3 - it should be on HTTPS. Take the URL i.e. if the URL is https://s3.aws.com/appconnector/index.html copy s3.aws
+4. As an admin, create an app connector integration in Templafy. Add the domian i.e. s3.aws.com to the domain settings (don't add a / at the end)
+5. Use the pop-open Templafy button on the app connector and select the template you uploaded in step 2
+
 ## Architecture
 
 - all communication to Templafy must use HTTPS - if you're developing on your computer, please use ngrok
@@ -84,6 +91,43 @@ If this happens,
 3. ensure you open Templafy from HTTPS
 4. ensure your user is authenticated to Templafy
 5. double check the above - there's probably something wrong
+
+# Javascript functions
+Open the popup & send the URL and features there
+
+## Templafy sends event type = ready
+Templafy will let the Window know when its ready for the JSON content, don't send it beforehand or it will be lost.
+
+```
+if (event.data.type == "ready") {
+    console.log(jsonContent)
+    openedPopup.postMessage({
+        type: "content",
+        content: jsonContent,
+    },
+        tenantOrigin);
+}
+```
+
+## Templafy sends event type = document
+
+When the end-user presses "Save back" function, Templafy will send the finished document back to users window.
+
+![image](https://user-images.githubusercontent.com/39210767/194216772-29da9511-c7b4-4215-a0c3-972c4ff5347c.png)
+
+Use the function to do what you need e.g. download or save to an in-house system
+
+```
+ if (event.data.type == "document") {
+       window.addEventListener('message', console.log)
+       let documentURL = event.data.documentUrl;
+       openedPopup.close();
+       //file is downloaded
+       window.location.href = documentURL;
+    }
+```
+
+
 
 ## How to use this template?
 
