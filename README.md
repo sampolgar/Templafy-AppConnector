@@ -2,7 +2,10 @@
 
 ## Overview
 1. What is the app connector (video demo)
-2. 
+2. [Key configuration ](https://github.com/sampolgar/Templafy-AppConnector/#key-configuration)
+3. [JavaScript Functions](https://github.com/sampolgar/Templafy-AppConnector/#javascript-functions)
+4. [How to use the template](https://github.com/sampolgar/Templafy-AppConnector/#how-to-use-this-template)
+5. [Configuring Templates for the App Connector](https://github.com/sampolgar/Templafy-AppConnector/#configuring-templates-to-receive-data-from-the-app-connector)
 
 ## What is the App Connector?
 
