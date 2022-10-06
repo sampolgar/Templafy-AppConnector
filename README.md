@@ -110,17 +110,18 @@ Templafy won't support non-HTTPS. You can deploy to an HTTPS server, or you can 
 1. Data sent to Templafy must be in JSON format
 2. Bind data in the document with HostSystem bindings https://support.templafy.com/hc/en-us/articles/360018415558-HostSystem-binding-
 
-## pre-filling Template form with JSON data
+## Pre-filling Template form with JSON data
 
 https://user-images.githubusercontent.com/39210767/194212231-97ecd614-20b2-48cd-8eb7-60076780a7b7.mp4
 
-## using JSON data in the document
+## Using JSON data in the document
 
-### simple text binding
+### Simple text binding
 
-![image](https://user-images.githubusercontent.com/39210767/194212570-aef6b0e5-d25c-4939-8bba-ecca5c59ca61.png)
+![image](https://user-images.githubusercontent.com/39210767/194214603-3e4db59a-4c9a-4b1b-9483-46bc58372b65.png)
 
-### json array binding with images
+
+### Json array binding with images
 1. Ensure the image is a public image
 2. Use an image binding, details here: https://support.templafy.com/hc/en-us/articles/6066298674205-How-to-insert-custom-image-bindings-to-accommodate-complex-use-cases-
 3. If multiple images, use repeating groups, details here: https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
