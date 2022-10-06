@@ -164,11 +164,9 @@ https://user-images.githubusercontent.com/39210767/194212231-97ecd614-20b2-48cd-
 
 ![image](https://user-images.githubusercontent.com/39210767/194214603-3e4db59a-4c9a-4b1b-9483-46bc58372b65.png)
 
-
 ### Json array binding with images
 1. Ensure the image is a public image
-2. Use an image binding, details here: https://support.templafy.com/hc/en-us/articles/6066298674205-How-to-insert-custom-image-bindings-to-accommodate-complex-use-cases-
-3. If multiple images, use repeating groups, details here: https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding
+2. Use an image binding, details [here](https://support.templafy.com/hc/en-us/articles/6066298674205-How-to-insert-custom-image-bindings-to-accommodate-complex-use-cases-) 
+3. If multiple images, use repeating groups, details [here](https://support.templafy.com/hc/en-us/articles/360018397457-Adaptive-sections-Repeating-Group-binding) 
 
 https://user-images.githubusercontent.com/39210767/194213926-9bd44f00-6268-4667-b865-2d02dcffe227.mp4
-
