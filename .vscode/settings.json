@@ -1,4 +1,0 @@
-{
-    "appService.defaultWebAppToDeploy": "/subscriptions/4e22f3ba-fbf8-4259-9852-355ab863cb3c/AppServices/subscriptions/4e22f3ba-fbf8-4259-9852-355ab863cb3c/resourceGroups/SPO-Integrations/providers/Microsoft.Web/sites/spo-appconnector",
-    "appService.deploySubpath": "."
-}
