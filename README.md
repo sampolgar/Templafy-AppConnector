@@ -15,7 +15,7 @@ https://user-images.githubusercontent.com/39210767/194206135-3cda8d01-d57f-46c7-
 
 ## TL|DR
 1. Host the [HTML file](https://github.com/sampolgar/Templafy-AppConnector/blob/main/index.html) in Azure blog or an S3 bucket as a static website, change the tenant URL details inside the HTML file
-2. Upload [this word](https://templafydownload.blob.core.windows.net/delivery/Integrations/AppConnector-HTML/index.html) document to your Templafy
+2. Upload [this word](https://templafydownload.blob.core.windows.net/delivery/Integrations/AppConnector-HTML/AppConnector-PrefilledForm-with-image.docx) document to your Templafy
 3. Open the HTML file on Azure blob or S3 - it should be on HTTPS. Take the URL i.e. if the URL is https://s3.aws.com/appconnector/index.html copy s3.aws
 4. As an admin, create an app connector integration in Templafy. Add the domian i.e. s3.aws.com to the domain settings (don't add a / at the end)
 5. Use the pop-open Templafy button on the app connector and select the template you uploaded in step 2
